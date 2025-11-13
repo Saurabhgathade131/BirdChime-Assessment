@@ -15,7 +15,7 @@ export const createApp = () => {
   app.use(express.json({ limit: "100kb" }));
   app.use(requestId());
   app.use(pinoHttp()); // structured logs with req.id
-
+  app.use('/', (req, res)=>{res.send("welcome")})
   app.use("/healthz", health.liveness);
   app.use("/readyz", health.readiness);
 
