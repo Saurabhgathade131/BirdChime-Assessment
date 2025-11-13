@@ -10,20 +10,36 @@ import { errorHandler } from "./middleware/error";
 
 export const createApp = () => {
   const app = express();
+
   app.use(helmet());
-  app.use(cors({ origin: process.env.CORS_ORIGIN?.split(",") ?? "*", credentials: true }));
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN?.split(",") ?? "*",
+      credentials: true
+    })
+  );
+
   app.use(express.json({ limit: "100kb" }));
   app.use(requestId());
-  app.use(pinoHttp()); // structured logs with req.id
-  app.use('/', (req, res)=>{res.send("welcome")})
+  app.use(pinoHttp());
+
+  // Health routes
   app.use("/healthz", health.liveness);
   app.use("/readyz", health.readiness);
 
-  // Global rate limit (burst-safe); per-route overrides possible
+  // Rate limit
   app.use("/api", rateLimiter({ windowMs: 60_000, max: 120 }));
 
+  // API routes
   app.use("/api/appointments", appointments);
 
+  // Welcome route (MUST be after others)
+  app.get("/", (req, res) => {
+    res.send("welcome");
+  });
+
+  // Error handler
   app.use(errorHandler);
+
   return app;
 };
