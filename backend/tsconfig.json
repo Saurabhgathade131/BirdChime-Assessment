@@ -1,22 +1,18 @@
 {
   "compilerOptions": {
-    /* Language and module options */
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
 
-    /* Paths */
     "rootDir": "./src",
     "outDir": "./dist",
 
-    /* TypeScript strictness */
-    "strict": true,
-    "resolveJsonModule": true,
-
-    /* Source maps for debugging */
     "sourceMap": true
   },
   "include": ["src"],
