@@ -12,6 +12,5 @@ const AppointmentSchema = new Schema(
   { timestamps: { createdAt: true, updatedAt: false } }
 );
 
-AppointmentSchema.index({ startsAt: 1 }, { unique: true });
 
 export const Appointment = model("Appointment", AppointmentSchema);
